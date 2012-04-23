@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    istream * in = &cin;
+    istream * is = &cin;
     filebuf fb;
     if( argc == 2 ) {
         fb.open( argv[1], ifstream::in );
@@ -12,19 +12,20 @@ int main(int argc, char** argv) {
             cerr << "Invalid filename: " << argv[1];
             return 1;
         } else {
-            in = new istream(&fb);
+            is = new istream(&fb);
         }
     } 
 
+    istream& in(*is);
     int n, m, ncolors;
-    *in >> n;
-    *in >> m;
-    *in >> ncolors;
+    in >> n;
+    in >> m;
+    in >> ncolors;
     graph g(n);
 
     for( int i = 0; i < m; ++i ) {
         int e1, e2;
-        *in >> e1 >> e2;
+        in >> e1 >> e2;
         g.add_edge(e1,e2);
     }
     
