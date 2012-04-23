@@ -1,0 +1,22 @@
+graph-coloring-sampler
+======================
+Input is of the following format:
+n               # of vertices
+m               # of edges
+q               # of colors
+u1 v1           # e1
+u2 v2           # e2
+u3 v3           # e3
+.               .
+.               .
+.               .
+um-1 vm-1       # em-1
+um vm           # em
+
+
+The program does not check the input file for any condition. Input is assumed
+to be valid.
+
+If the program is invoked without command-line arguments it searches for input
+on standard in. Otherwise the program uses the filename specified in the
+first commandline argument.
