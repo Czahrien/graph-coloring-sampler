@@ -22,7 +22,6 @@ int& graph::edge_entry(unsigned int u, unsigned int v) {
 }
 int graph::has_edge(unsigned int u, unsigned int v) {
     assert( u < _n && v < _n );
-    unsigned int ret;
     return edge_entry(u,v);
 }
 
@@ -41,10 +40,10 @@ std::vector<unsigned int> graph::get_colors() {
 
 int graph::valid_coloring() {
     for( unsigned int i = 0; i < _n; ++i ) {
-        int c1 = _colors[i];
+        unsigned int c = _colors[i];
         for( unsigned int j = i; j < _n; ++j ) 
             if(_amatrix[i][j]) {
-                if( i == _colors[j] ) {
+                if( c == _colors[j] ) {
                     return false;
                 }
             }
@@ -54,8 +53,8 @@ int graph::valid_coloring() {
 
 void graph::remove_edges(unsigned int v) {
     assert(v < _n);
-    for( int i = 0; i < _n; ++i ) {
-        edge_entry(i,v) = 0;
+    for( unsigned int i = 0u; i < _n; ++i ) {
+        edge_entry(i,v) = 0u;
     }
 }
 
