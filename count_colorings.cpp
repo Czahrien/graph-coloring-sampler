@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     if( argc == 2 ) {
         fb.open( argv[1], ifstream::in );
         if( !fb.is_open() ) { 
-            cerr << "Invalid filename: " << argv[1];
+            cerr << "Invalid filename: " << argv[1] << "\n";
             return 1;
         } else {
             is = new istream(&fb);
@@ -44,7 +44,15 @@ int main(int argc, char** argv) {
             tmp /= ncolors;
         }
         g.set_colors(colors);
-        count += g.valid_coloring();
+        if(g.valid_coloring()) {
+            count++;
+#ifdef OUTPUT_COLORINGS
+            for( int k = 0; k < n; ++k ) {
+                cout << colors[k] << " ";
+            }
+            cout << "\n";
+#endif
+        }
     }
     cout << count << endl;
 }
