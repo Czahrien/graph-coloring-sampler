@@ -8,9 +8,13 @@
 #include <iostream>
 #include "graph.h"
 
+// O(1)
 graph::graph() : _n(0), _amatrix(), _colors() {}
+
+// O(N)
 graph::graph(unsigned int n) : _n(n), _amatrix(n,std::vector<int>(n,0)), _colors(n,0) {}
 
+// O(1)
 int& graph::edge_entry(unsigned int u, unsigned int v) {
     //assuming u and v are checked...
     if( u > v ) {
@@ -21,6 +25,8 @@ int& graph::edge_entry(unsigned int u, unsigned int v) {
     }
     return (_amatrix[u][v]);
 }
+
+// O(1)
 int graph::has_edge(unsigned int u, unsigned int v, unsigned int i) {
     assert( u < _n && v < _n);
     // if either of these are the case the edge is not in the subgraph
@@ -35,19 +41,23 @@ int graph::has_edge(unsigned int u, unsigned int v, unsigned int i) {
     }
 }
 
+// O(1)
 unsigned int graph::get_vertices() {
     return _n;
 }
 
+// O(1)
 unsigned int graph::get_color(unsigned int v) {
     assert(v < _n);
     return _colors[v];
 }
 
+// O(N)
 std::vector<unsigned int> graph::get_colors() {
     return _colors;
 }
 
+// O(N^2)
 int graph::valid_coloring(unsigned int i) {
     if( i > _n) i = _n;
     for( unsigned int k = 0; k < i; ++k ) {
@@ -62,6 +72,7 @@ int graph::valid_coloring(unsigned int i) {
     return true;
 }
 
+// O(N)
 void graph::remove_edges(unsigned int v) {
     assert(v < _n);
     for( unsigned int i = 0u; i < _n; ++i ) {
@@ -69,11 +80,13 @@ void graph::remove_edges(unsigned int v) {
     }
 }
 
+// O(1)
 void graph::remove_edge(unsigned int u, unsigned int v) {
     assert(u < _n && v < _n);
     edge_entry(u,v) = 0;
 }
 
+// O(1)
 void graph::add_edge(unsigned int u, unsigned int v) {
     assert(u < _n && v < _n);
     edge_entry(u,v) = 1;
