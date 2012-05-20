@@ -20,9 +20,15 @@ int& graph::edge_entry(unsigned int u, unsigned int v) {
     }
     return (_amatrix[u][v]);
 }
-int graph::has_edge(unsigned int u, unsigned int v) {
-    assert( u < _n && v < _n );
-    return edge_entry(u,v);
+int graph::has_edge(unsigned int u, unsigned int v, unsigned int i) {
+    assert( u < _n && v < _n && i <= _n);
+    // if either of these are the case the edge is not in the subgraph
+    // being considered.
+    if(v < i && u < i) {
+        return edge_entry(u,v);
+    } else {
+        return 0;
+    }
 }
 
 unsigned int graph::get_vertices() {
@@ -38,11 +44,12 @@ std::vector<unsigned int> graph::get_colors() {
     return _colors;
 }
 
-int graph::valid_coloring() {
-    for( unsigned int i = 0; i < _n; ++i ) {
-        unsigned int c = _colors[i];
-        for( unsigned int j = i; j < _n; ++j ) 
-            if(_amatrix[i][j]) {
+int graph::valid_coloring(unsigned int i) {
+    if( i > _n) i = _n;
+    for( unsigned int k = 0; k < i; ++k ) {
+        unsigned int c = _colors[k];
+        for( unsigned int j = k; j < i; ++j ) 
+            if(_amatrix[k][j]) {
                 if( c == _colors[j] ) {
                     return false;
                 }
@@ -66,10 +73,6 @@ void graph::remove_edge(unsigned int u, unsigned int v) {
 void graph::add_edge(unsigned int u, unsigned int v) {
     assert(u < _n && v < _n);
     edge_entry(u,v) = 1;
-}
-
-void graph::set_vertices(unsigned int n) {
-    return; //TODO: Implement me
 }
 
 void graph::set_color(unsigned int v, unsigned int c) {

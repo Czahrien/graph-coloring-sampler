@@ -54,9 +54,14 @@ class graph {
          *
          * @param u     One vertex of the edge.
          * @param v     The other vertex of the edge.
+         * @param i     The subgraph we are considering. Default value of _n
+         *              means that this function behaves as if it was simply
+         *              checking the adjacency matrix normally.
+         *              Default value of -1 just means that the max integer
+         *              will be used which is desirable.
          * @return      true if the edge is present, false otherwise.
          */
-        int has_edge(unsigned int u, unsigned int v);
+        int has_edge(unsigned int u, unsigned int v,unsigned int i=-1);
         /**
          * Obtains the number of vertices in the graph.
          *
@@ -80,7 +85,7 @@ class graph {
          *
          * @return  true if the graph is colored validly, false otherwise.
          */
-        int valid_coloring();
+        int valid_coloring(unsigned int i = -1);
     public:
         /**
          * Removes all edges incident to vertex v.
@@ -102,16 +107,6 @@ class graph {
          * @param v     The other vertex of the edge.
          */
         void add_edge(unsigned int u, unsigned int v);
-        /**
-         * Sets the number of vertices in the graph. Additional vertices will 
-         * be disjoint and colored with color 0. Removal of vertices will
-         * not resize the color set or remove entries from the adjacency matrix
-         * so if resized the old information about the edges will remain 
-         * accessible.
-         *
-         * @param   The new number of vertices.
-         */
-        void set_vertices(unsigned int n);
         /**
          * Sets the color of vertex v to c. This does not check for validity.
          *
