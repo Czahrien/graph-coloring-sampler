@@ -86,6 +86,11 @@ class graph {
          * @return  true if the graph is colored validly, false otherwise.
          */
         int valid_coloring(unsigned int i = -1);
+        /**
+         * Generates an arbitrary random coloring as an initial step to the
+         * coloring Markov Chain.
+         */
+        void generate_arbitrary_coloring();
     public:
         /**
          * Removes all edges incident to vertex v.
