@@ -80,6 +80,20 @@ void graph::set_color(unsigned int v, unsigned int c) {
     _colors[v] = c;
 }
 
+int graph::set_color_verify(unsigned int v, unsigned int c, unsigned int i) {
+    assert(v < _n);
+    if( i > _n ) i = _n;
+    for(unsigned int j = 0; j < i; ++i ) {
+        if(has_edge(v,j,i)) {
+            if(c == _colors[j]) {
+                return 0;
+            }
+        }
+    }
+    _colors[v] = c;
+    return 1;
+}
+
 void graph::set_colors(std::vector<unsigned int> v) {
     assert(v.size() >= _n);
     _colors = v;

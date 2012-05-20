@@ -115,6 +115,17 @@ class graph {
          */
         void set_color(unsigned int v, unsigned int c);
         /**
+         * Sets the color of vertex v to c if c is a valid color for v.
+         * Otherwise the graph is not modified. If this function succeeds
+         * it returns 1, otherwise it returns 0.
+         *
+         * @param v     The vertex to color.
+         * @param c     The color.
+         * @param i     The subgraph to verify against.
+         * @return      1 if success, 0 if failure.
+         */
+        int set_color_verify(unsigned int v, unsigned int c, unsigned int i = -1);
+        /**
          * Sets the colors of all vertices to the given vector of colors.
          * 
          * @param v     A vector containing at least n colors.
