@@ -1,0 +1,7 @@
+TODO:
+- Implement Markov Chain Step
+- Implement sampling algorithm (see www.cs.rit.edu/~bdm8233/MCMCHW5.pdf)
+- Determine number of samples (sorry guys, I was wrong about the 2*delta + 1 thing. q is actually bounded by delta + 2)
+- Verify it works correctly.
+- Put math into paper.
+- Put results into paper.

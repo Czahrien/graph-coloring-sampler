@@ -54,9 +54,14 @@ class graph {
          *
          * @param u     One vertex of the edge.
          * @param v     The other vertex of the edge.
+         * @param i     The subgraph we are considering. Default value of _n
+         *              means that this function behaves as if it was simply
+         *              checking the adjacency matrix normally.
+         *              Default value of -1 just means that the max integer
+         *              will be used which is desirable.
          * @return      true if the edge is present, false otherwise.
          */
-        int has_edge(unsigned int u, unsigned int v);
+        int has_edge(unsigned int u, unsigned int v,unsigned int i=-1);
         /**
          * Obtains the number of vertices in the graph.
          *
@@ -80,7 +85,12 @@ class graph {
          *
          * @return  true if the graph is colored validly, false otherwise.
          */
-        int valid_coloring();
+        int valid_coloring(unsigned int i = -1);
+        /**
+         * Generates an arbitrary random coloring as an initial step to the
+         * coloring Markov Chain.
+         */
+        void generate_arbitrary_coloring();
     public:
         /**
          * Removes all edges incident to vertex v.
@@ -103,22 +113,23 @@ class graph {
          */
         void add_edge(unsigned int u, unsigned int v);
         /**
-         * Sets the number of vertices in the graph. Additional vertices will 
-         * be disjoint and colored with color 0. Removal of vertices will
-         * not resize the color set or remove entries from the adjacency matrix
-         * so if resized the old information about the edges will remain 
-         * accessible.
-         *
-         * @param   The new number of vertices.
-         */
-        void set_vertices(unsigned int n);
-        /**
          * Sets the color of vertex v to c. This does not check for validity.
          *
          * @param v     The vertex to color.
          * @param c     The color.
          */
         void set_color(unsigned int v, unsigned int c);
+        /**
+         * Sets the color of vertex v to c if c is a valid color for v.
+         * Otherwise the graph is not modified. If this function succeeds
+         * it returns 1, otherwise it returns 0.
+         *
+         * @param v     The vertex to color.
+         * @param c     The color.
+         * @param i     The subgraph to verify against.
+         * @return      1 if success, 0 if failure.
+         */
+        int set_color_verify(unsigned int v, unsigned int c, unsigned int i = -1);
         /**
          * Sets the colors of all vertices to the given vector of colors.
          * 
