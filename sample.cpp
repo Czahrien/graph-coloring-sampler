@@ -36,6 +36,11 @@ int main(int argc, char** argv) {
         long double approx = g.sample(ncolors,0.1);
         v.push_back(approx);
         cout << "Run " << i << ":"<< approx << endl;
+        // we should wait until time() returns a new output so that the
+        // random number generator does not use the same seed twice
+        // in a row.
+        long t = time(NULL);
+        while( time(NULL) == t );
     }
     sort(v.begin(), v.end());
     cout << "Median of 7: " << v[3] << endl;
