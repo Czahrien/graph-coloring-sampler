@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Ubuntu Sep  7 2011) on Mon Apr 23 14:43:44 2012
+# Created by gmakemake (Ubuntu Sep  7 2011) on Tue May 22 16:47:03 2012
 #
 
 #
@@ -43,12 +43,12 @@ COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c
 CPP = $(CPP) $(CPPFLAGS)
 ########## Flags from header.mak
 
-CXXFLAGS=-Wall -Wextra -Wundef -Wcast-qual -Wcast-align -Wconversion -Wreturn-type -Wold-style-cast -Wsign-promo -Wctor-dtor-privacy -Woverloaded-virtual -Wnon-virtual-dtor -Wno-deprecated -O3
+CXXFLAGS=-Wall -Wextra -Wundef -Wcast-qual -Wcast-align -Wconversion -Wreturn-type -Wold-style-cast -Wsign-promo -Wctor-dtor-privacy -Woverloaded-virtual -Wnon-virtual-dtor -Wno-deprecated -ggdb
 
 ########## End of flags from header.mak
 
 
-CPP_FILES =	count_colorings.cpp graph.cpp
+CPP_FILES =	count_colorings.cpp graph.cpp main.cpp sample.cpp
 C_FILES =	
 PS_FILES =	
 S_FILES =	
@@ -61,10 +61,16 @@ OBJFILES =	graph.o
 # Main targets
 #
 
-all:	count_colorings 
+all:	count_colorings main sample 
 
 count_colorings:	count_colorings.o $(OBJFILES)
 	$(CXX) $(CXXFLAGS) -o count_colorings count_colorings.o $(OBJFILES) $(CCLIBFLAGS)
+
+main:	main.o $(OBJFILES)
+	$(CXX) $(CXXFLAGS) -o main main.o $(OBJFILES) $(CCLIBFLAGS)
+
+sample:	sample.o $(OBJFILES)
+	$(CXX) $(CXXFLAGS) -o sample sample.o $(OBJFILES) $(CCLIBFLAGS)
 
 #
 # Dependencies
@@ -72,6 +78,8 @@ count_colorings:	count_colorings.o $(OBJFILES)
 
 count_colorings.o:	graph.h
 graph.o:	graph.h
+main.o:	
+sample.o:	graph.h
 
 #
 # Housekeeping
@@ -83,7 +91,7 @@ archive.tgz:	$(SOURCEFILES) Makefile
 	tar cf - $(SOURCEFILES) Makefile | gzip > archive.tgz
 
 clean:
-	-/bin/rm $(OBJFILES) count_colorings.o core 2> /dev/null
+	-/bin/rm $(OBJFILES) count_colorings.o main.o sample.o core 2> /dev/null
 
 realclean:        clean
-	-/bin/rm -rf count_colorings 
+	-/bin/rm -rf count_colorings main sample 
