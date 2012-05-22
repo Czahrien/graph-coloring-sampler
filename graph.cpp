@@ -8,6 +8,7 @@
 #include <cassert>
 #include <iostream>
 #include <set>
+#include <cmath>
 #include "graph.h"
 
 // O(1)
@@ -162,5 +163,28 @@ unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigne
 
 	return color;
 }
+
+long double graph::sample(unsigned int q, long double epsilon) {
+	generate_arbitrary_coloring();
+    srand(time(NULL));
+	for(unsigned int i = 0; i < _n * _n; i++){
+		markov_step(q,_n);
+	}
+    unsigned int samples = ceil ( (75*_n) / (epsilon*epsilon) );
+	long double ln_samples = log (samples);
+    long double rho_product = 0;
+    for(unsigned int i = _n - 2; i < _n - 1; i--){
+        unsigned int count = 0;
+		for(unsigned int s = 0; s < samples; s++){
+			markov_step(q,i);
+			if(valid_coloring(i+1)){
+                count++;
+            }
+		}
+        rho_product += (log (count) - ln_samples);
+	}
+	return exp (rho_product);
+}
+
 
 

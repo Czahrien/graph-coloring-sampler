@@ -160,6 +160,10 @@ class graph {
          *              will be used which is desirable.
 		 */
 		unsigned int get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i = -1);
+		/**
+		 * Performs the sampling
+		 */
+		long double sample(unsigned int q, long double epsilon = .1);
 	private:
         /**
          * The number of vertices in the graph.
