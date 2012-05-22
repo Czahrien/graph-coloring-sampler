@@ -142,6 +142,10 @@ void graph::markov_step(unsigned int q, unsigned int i) {
     assert(valid_coloring(i));
     unsigned int v = rand() % _n;
     set_color(v, get_rand_valid_color(v,q,i));
+    /*for( int i = 0; i < _n; ++i ){
+        std::cout << _colors[i] << " ";
+    }
+    std::cout << std::endl;*/
 }
 // average O(nlog(n))
 unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
@@ -175,15 +179,18 @@ long double graph::sample(unsigned int q, long double epsilon) {
     unsigned int samples = static_cast<unsigned int> (ceil ( (75*_n) / (epsilon*epsilon) ));
 	long double ln_samples = log (samples);
     long double rho_product = 0;
-    for(unsigned int i = _n - 2; i < _n - 1; i--){
+    for(unsigned int i = _n - 1; i < _n; i--){
         unsigned int count = 0;
 		for(unsigned int s = 0; s < samples; s++){
 			markov_step(q,i);
+            assert(valid_coloring(i));
 			if(valid_coloring(i+1)){
                 count++;
             }
 		}
-        rho_product += (log (count) - ln_samples);
+        long double rho_i =  (log(count) - ln_samples);
+        std::cout << "rho_" << i << "=>" << exp(log(count)-ln_samples) << std::endl;
+        rho_product += rho_i;
 	}
-	return exp (rho_product);
+	return exp (rho_product) * pow(q,_n);
 }
