@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 #include "graph.h"
 
 using namespace std;
@@ -30,6 +31,12 @@ int main(int argc, char** argv) {
         in >> e1 >> e2;
         g.add_edge(e1,e2);
     }
-    long double approx = g.sample(ncolors,0.1);
-    cout << approx << endl;
+    vector<long double> v;
+    for( int i = 0; i < 7; ++i ) {
+        long double approx = g.sample(ncolors,0.1);
+        v.push_back(approx);
+        cout << "Run " << i << ":"<< approx << endl;
+    }
+    sort(v.begin(), v.end());
+    cout << "Median of 7: " << v[3] << endl;
 }
