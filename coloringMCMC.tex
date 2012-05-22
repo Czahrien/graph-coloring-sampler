@@ -9,20 +9,27 @@
 \author{Tony Bentancur \texttt{<amb8241@rit.edu>}\\ Ben Mayes \texttt{<bdm8233@rit.edu>}\\ Josh Lindsay \texttt{<jal3040@rit.edu>}}
 \date{\today}
 \maketitle
-\section{Reduction of Sampling to Counting}
-Recall form homework 5				
+\section{Reduction of Counting to Sampling}
+Recall form homework 5 (with some minor modifications):	
 \begin{itemize}
-\item $\displaystyle G_i = $ the graph $G$ with only edges incident to vertices in $\{v_1, v_2, \ldots ,v_i\} \subseteq V$
+\item $\displaystyle G_i = $ the graph $G$ with only edges incident to vertices in $\{v_0, v_1, \ldots ,v_{i-1}\} \subseteq V$
 \item $\displaystyle\rho_i = \frac{\mbox{number of colorings in } G_{i+1} }{\mbox{number of colorings in } G_{i} } = \frac{|G_{i+1}|}{|G_{i}|}$
 \item $\displaystyle\frac{q-\Delta}{q} \leq \rho_i \leq 1$
 \item $\displaystyle\prod_{i=1}^{n-1}{\rho_i} = \frac{|C(G_n)|}{q^n}$
 \end{itemize}
-						
 
+To determine the number of samples the reduction was identical to the reduction of edge matching counting operating on the assumption that $q \geq 2*\Delta$. When $q$ is less than this it is difficult, if not impossible to even make conclusions about the mixing time of the Markov chain, this means that merely knowing if the Markov chain has mixed and is indeed sampling randomly with respect to the initial coloring which defeats the entire purpose of sampling using an FPAUS because we do not even know if it is sampling uniformly. Using the assumption that $q \geq 2*\Delta$ we can make the following simplifying assumption:
 
-			
-					
-							
-							
+\[ \frac{q-\Delta}{q} \geq \frac{\Delta}{2\Delta} \geq \frac{1}{2} \]
+
+This assumption allows us to bound $\rho_i$ as follows:
+
+\[ \frac{1}{2} \leq \rho_i \leq 1 \]
+
+Which means that nearly all the calculations of the edge matching sampling chain can be used except for the number of samples (which relies on the number of $\rho_i$ terms). However, all that needs to change there is the $m$ terms in the matchings to the $n$ terms in the colorings. Since none of the future steps rely on $m$ in any way that substituting it with $n$ will break it, this works out quite nicely. This means that the number of samples, $s$, becomes:
+
+\[ s = \frac{75*n}{\epsilon^2} \]
+
+Aside from that change, the reductions are both identical.
 
 \end{document}
