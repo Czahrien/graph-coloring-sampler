@@ -9,6 +9,8 @@
 #include <iostream>
 #include <set>
 #include <cmath>
+#include <ctime>
+#include <cstdlib>
 #include "graph.h"
 
 // O(1)
@@ -137,31 +139,31 @@ void graph::generate_arbitrary_coloring() {
 }
 // average O(n^2)
 void graph::markov_step(unsigned int q, unsigned int i) {
-	assert(valid_coloring(i));
-	unsigned int v = rand() % i;
-	set_color(v, get_rand_valid_color(v,q,i));
+    assert(valid_coloring(i));
+    unsigned int v = rand() % i;
+    set_color(v, get_rand_valid_color(v,q,i));
 }
 // average O(nlog(n))
 unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
-	std::set<unsigned int> invalid_colors;
+    std::set<unsigned int> invalid_colors;
 
-	if(i > _n)
-		i = _n;
-	
-	for(unsigned int j = 0; j < i; j++){
-		if(has_edge(v,j,i)){
-			invalid_colors.insert(get_color(j));
-		}
-	}
-	
-	unsigned int color;
+    if(i > _n)
+        i = _n;
+    
+    for(unsigned int j = 0; j < i; j++){
+        if(has_edge(v,j,i)){
+            invalid_colors.insert(get_color(j));
+        }
+    }
+    
+    unsigned int color;
     //average O(q / (q - delta))
-	do{
-		color = rand() % q;
-	}
-	while(invalid_colors.find(color) != invalid_colors.end() );
+    do{
+        color = rand() % q;
+    }
+    while(invalid_colors.find(color) != invalid_colors.end() );
 
-	return color;
+    return color;
 }
 
 long double graph::sample(unsigned int q, long double epsilon) {
@@ -170,7 +172,7 @@ long double graph::sample(unsigned int q, long double epsilon) {
 	for(unsigned int i = 0; i < _n * _n; i++){
 		markov_step(q,_n);
 	}
-    unsigned int samples = ceil ( (75*_n) / (epsilon*epsilon) );
+    unsigned int samples = static_cast<unsigned int> (ceil ( (75*_n) / (epsilon*epsilon) ));
 	long double ln_samples = log (samples);
     long double rho_product = 0;
     for(unsigned int i = _n - 2; i < _n - 1; i--){
@@ -185,6 +187,3 @@ long double graph::sample(unsigned int q, long double epsilon) {
 	}
 	return exp (rho_product);
 }
-
-
-
