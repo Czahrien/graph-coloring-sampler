@@ -31,12 +31,9 @@ int graph::has_edge(unsigned int u, unsigned int v, unsigned int i) {
     assert( u < _n && v < _n);
     // if either of these are the case the edge is not in the subgraph
     // being considered.
-    std::cout << v << " " << u << " " << i << std::endl;
     if(v < i && u < i) {
-        std::cout << "lt i" << std::endl;
         return edge_entry(u,v);
     } else {
-        std::cout << "gte i" << std::endl;
         return 0;
     }
 }
@@ -134,5 +131,4 @@ void graph::generate_arbitrary_coloring() {
         // opposed to O(N^2) which is slightly more efficient.
         while( !set_color_verify(i,c++,i+1)); // O(N)
     }
-    //std::cout << c - 1 << std::endl;   
 }
