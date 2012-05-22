@@ -200,9 +200,9 @@ long double graph::sample(unsigned int q, long double epsilon) {
 	long double ln_samples = log (samples);
     long double rho_product = 0;
     std::cout << "Starting sampling..." << std::endl;
-    for(unsigned int i = _n - 1; i > 0; i--){ // O(n*s*n^2)
+    for(unsigned int i = _n - 1; i > 0; i--){ // O(n*n^3/eps^2)
         unsigned int count = 0;
-		for(unsigned int s = 1; s < samples; s++){ // O(n/eps^2)
+		for(unsigned int s = 1; s < samples; s++){ // O(n^2*n/eps^2)
 			markov_step(q,i); // run a step of the markov chain on graph G_i
             assert(valid_coloring(i));
 			if(valid_coloring(i+1)){ // increment the count if the coloring is valid on G_{i+1}
