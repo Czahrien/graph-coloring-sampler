@@ -8,6 +8,8 @@
 #include <cassert>
 #include <iostream>
 #include <set>
+#include <ctime>
+#include <cstdlib>
 #include "graph.h"
 
 // O(1)
