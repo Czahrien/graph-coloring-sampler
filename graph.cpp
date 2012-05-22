@@ -140,7 +140,7 @@ void graph::generate_arbitrary_coloring() {
 // average O(n^2)
 void graph::markov_step(unsigned int q, unsigned int i) {
     assert(valid_coloring(i));
-    unsigned int v = rand() % i;
+    unsigned int v = rand() % _n;
     set_color(v, get_rand_valid_color(v,q,i));
 }
 // average O(nlog(n))
