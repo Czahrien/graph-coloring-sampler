@@ -31,11 +31,12 @@ int main(int argc, char** argv) {
     
 
     vector<unsigned int> colors(n,0);
-    long count = 0;
-    long prod = 1;
+    long long count = 0;
+    long long prod = 1;
     for( int i = 0; i < n; ++i ) {
         prod *= ncolors;
     }
+    cout << prod << endl;
     for( int i = 0; i < prod; ++i ) {
         int tmp = i;
         for( int j = 0; j < n; ++j ) {
