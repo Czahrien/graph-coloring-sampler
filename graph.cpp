@@ -142,10 +142,6 @@ void graph::markov_step(unsigned int q, unsigned int i) {
     assert(valid_coloring(i));
     unsigned int v = rand() % _n;
     set_color(v, get_rand_valid_color(v,q,i));
-    /*for( int i = 0; i < _n; ++i ){
-        std::cout << _colors[i] << " ";
-    }
-    std::cout << std::endl;*/
 }
 // average O(nlog(n))
 unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
@@ -170,27 +166,56 @@ unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigne
     return color;
 }
 
+// average O(n^4/eps^2)
 long double graph::sample(unsigned int q, long double epsilon) {
 	generate_arbitrary_coloring();
     srand(time(NULL));
-	for(unsigned int i = 0; i < _n * _n; i++){
+    unsigned int delta = 0;
+    for( int i = 0; i < _n; ++i ) {
+        unsigned int ndelta = 0;
+        for( int j = 0; j < _n; ++j ) {
+            ndelta += has_edge(i,j);
+        }
+        delta = delta < ndelta ? ndelta : delta;
+    }
+    std::cout << "Given graph has delta = " << delta << " colors." << std::endl;
+    if( q < 2*delta) std::cout << "Warning: q ( " << q << ") < 2*delta. Sample may be inaccurate." <<std::endl;
+    unsigned int steps = static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon));
+    std::cout << "Mixing Markov chain by running for " << steps << " steps" << std::endl; 
+    unsigned int start = time(NULL);
+	for(unsigned int i = 0; i < steps; i++){
 		markov_step(q,_n);
 	}
+    std::cout << "Markov chain mixed in " <<  time(NULL) - start << "s" << std::endl;
+    std::cout << "Random coloring: <";
+    for( int i = 0; i < _n; ++i ) {
+        std::cout << _colors[i];
+        if(i != _n - 1) {
+            std::cout << ",";
+        } else {
+            std::cout << ">" << std::endl;
+        }
+    }
     unsigned int samples = static_cast<unsigned int> (ceil ( (75*_n) / (epsilon*epsilon) ));
 	long double ln_samples = log (samples);
     long double rho_product = 0;
-    for(unsigned int i = _n - 1; i < _n; i--){
+    std::cout << "Starting sampling..." << std::endl;
+    for(unsigned int i = _n - 1; i < _n; i--){ // O(n*s*n^2)
         unsigned int count = 0;
-		for(unsigned int s = 0; s < samples; s++){
-			markov_step(q,i);
+		for(unsigned int s = 1; s < samples; s++){ // O(n/eps^2)
+			markov_step(q,i); // run a step of the markov chain on graph G_i
             assert(valid_coloring(i));
-			if(valid_coloring(i+1)){
+			if(valid_coloring(i+1)){ // increment the count if the coloring is valid on G_{i+1}
                 count++;
             }
 		}
-        long double rho_i =  (log(count) - ln_samples);
+        // calculate the logarithm of rho_i
+        long double rho_i =  (log(count) - ln_samples); 
         std::cout << "rho_" << i << "=>" << exp(log(count)-ln_samples) << std::endl;
+        // "multiply" in the rho term to the product.
         rho_product += rho_i;
 	}
-	return exp (rho_product) * pow(q,_n);
+    // "multiply" out the q^n term
+    rho_product += _n*log(q);
+	return exp (rho_product);
 }
