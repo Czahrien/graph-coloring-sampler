@@ -12,6 +12,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "graph.h"
+#define OMIT_OUTPUT
 
 // O(1)
 graph::graph() : _n(0), _amatrix(), _colors() {}
@@ -178,14 +179,19 @@ long double graph::sample(unsigned int q, long double epsilon) {
         }
         delta = delta < ndelta ? ndelta : delta;
     }
+#ifndef OMIT_OUTPUT
     std::cout << "Given graph has delta = " << delta << " colors." << std::endl;
     if( q < 2*delta) std::cout << "Warning: q ( " << q << ") < 2*delta. Sample may be inaccurate." <<std::endl;
+#endif
     unsigned int steps = static_cast<unsigned int>(static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon)));
+#ifndef OMIT_OUTPUT
     std::cout << "Mixing Markov chain by running for " << steps << " steps" << std::endl; 
+#endif
     unsigned int start = time(NULL);
 	for(unsigned int i = 0; i < steps; i++){
 		markov_step(q,_n);
 	}
+#ifndef OMIT_OUTPUT
     std::cout << "Markov chain mixed in " <<  time(NULL) - start << "s" << std::endl;
     std::cout << "Random coloring: <";
     for( unsigned int i = 0; i < _n; ++i ) {
@@ -196,10 +202,13 @@ long double graph::sample(unsigned int q, long double epsilon) {
             std::cout << ">" << std::endl;
         }
     }
+#endif
     unsigned int samples = static_cast<unsigned int> (ceil ( (75*_n) / (epsilon*epsilon) ));
 	long double ln_samples = log (samples);
     long double rho_product = 0;
+#ifndef OMIT_OUTPUT
     std::cout << "Starting sampling..." << std::endl;
+#endif
     for(unsigned int i = _n - 1; i > 0; i--){ // O(n*n^3/eps^2)
         unsigned int count = 0;
 		for(unsigned int s = 1; s < samples; s++){ // O(n^2*n/eps^2)
@@ -211,7 +220,9 @@ long double graph::sample(unsigned int q, long double epsilon) {
 		}
         // calculate the logarithm of rho_i
         long double rho_i =  (log(count) - ln_samples); 
+#ifndef OMIT_OUTPUT
         std::cout << "rho_" << i << "=>" << exp(log(count)-ln_samples) << std::endl;
+#endif
         // "multiply" in the rho term to the product.
         rho_product += rho_i;
 	}
