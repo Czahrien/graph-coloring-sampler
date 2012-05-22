@@ -136,31 +136,29 @@ void graph::generate_arbitrary_coloring() {
 }
 // average O(n^2)
 void graph::markov_step(unsigned int q, unsigned int i) {
-	assert(valid_coloring(i));
-	unsigned int v = rand() % i;
-	set_color(v, get_rand_valid_color(v,q,i));
+    assert(valid_coloring(i));
+    unsigned int v = rand() % i;
+    set_color(v, get_rand_valid_color(v,q,i));
 }
 // average O(nlog(n))
 unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
-	std::set<unsigned int> invalid_colors;
+    std::set<unsigned int> invalid_colors;
 
-	if(i > _n)
-		i = _n;
-	
-	for(unsigned int j = 0; j < i; j++){
-		if(has_edge(v,j,i)){
-			invalid_colors.insert(get_color(j));
-		}
-	}
-	
-	unsigned int color;
+    if(i > _n)
+        i = _n;
+    
+    for(unsigned int j = 0; j < i; j++){
+        if(has_edge(v,j,i)){
+            invalid_colors.insert(get_color(j));
+        }
+    }
+    
+    unsigned int color;
     //average O(q / (q - delta))
-	do{
-		color = rand() % q;
-	}
-	while(invalid_colors.find(color) != invalid_colors.end() );
+    do{
+        color = rand() % q;
+    }
+    while(invalid_colors.find(color) != invalid_colors.end() );
 
-	return color;
+    return color;
 }
-
-
