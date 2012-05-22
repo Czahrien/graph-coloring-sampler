@@ -134,7 +134,7 @@ void graph::generate_arbitrary_coloring() {
         // Additionally if we consider only the first i+1 vertices we are able
         // to efficiently arrive at a valid coloring in O(N*(N+1)/2) steps as
         // opposed to O(N^2) which is slightly more efficient.
-        while( !set_color_verify(i,c++,i+1) ); // O(N)
+        while( !set_color_verify(i,c++,i+1) ) ; // O(N)
     }
 }
 // average O(n^2)
@@ -171,16 +171,16 @@ long double graph::sample(unsigned int q, long double epsilon) {
 	generate_arbitrary_coloring();
     srand(time(NULL));
     unsigned int delta = 0;
-    for( int i = 0; i < _n; ++i ) {
+    for( unsigned int i = 0; i < _n; ++i ) {
         unsigned int ndelta = 0;
-        for( int j = 0; j < _n; ++j ) {
-            ndelta += has_edge(i,j);
+        for( unsigned int j = 0; j < _n; ++j ) {
+            ndelta += static_cast<unsigned int>(has_edge(i,j));
         }
         delta = delta < ndelta ? ndelta : delta;
     }
     std::cout << "Given graph has delta = " << delta << " colors." << std::endl;
     if( q < 2*delta) std::cout << "Warning: q ( " << q << ") < 2*delta. Sample may be inaccurate." <<std::endl;
-    unsigned int steps = static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon));
+    unsigned int steps = static_cast<unsigned int>(static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon)));
     std::cout << "Mixing Markov chain by running for " << steps << " steps" << std::endl; 
     unsigned int start = time(NULL);
 	for(unsigned int i = 0; i < steps; i++){
@@ -188,7 +188,7 @@ long double graph::sample(unsigned int q, long double epsilon) {
 	}
     std::cout << "Markov chain mixed in " <<  time(NULL) - start << "s" << std::endl;
     std::cout << "Random coloring: <";
-    for( int i = 0; i < _n; ++i ) {
+    for( unsigned int i = 0; i < _n; ++i ) {
         std::cout << _colors[i];
         if(i != _n - 1) {
             std::cout << ",";
