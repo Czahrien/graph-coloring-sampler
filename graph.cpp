@@ -134,19 +134,19 @@ void graph::generate_arbitrary_coloring() {
         // Additionally if we consider only the first i+1 vertices we are able
         // to efficiently arrive at a valid coloring in O(N*(N+1)/2) steps as
         // opposed to O(N^2) which is slightly more efficient.
-        while( !set_color_verify(i,c++,i+1)); // O(N)
+        while( !set_color_verify(i,c++,i+1) ); // O(N)
     }
     //std::cout << c - 1 << std::endl;   
 }
 // average O(n^2)
-void graph:markov_step(unsigned int q, unsigned int i) {
+void graph::markov_step(unsigned int q, unsigned int i) {
 	assert(valid_coloring(i));
 	unsigned int v = rand() % i;
 	set_color(v, get_rand_valid_color(v,q,i));
 }
 // average O(nlog(n))
-unsigned int graph:get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
-	set<unsigned int> invalid_colors;
+unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i) {
+	std::set<unsigned int> invalid_colors;
 
 	if(i > _n)
 		i = _n;
