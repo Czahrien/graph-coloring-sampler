@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Ubuntu Sep  7 2011) on Tue May 22 16:47:03 2012
+# Created by gmakemake (Ubuntu Sep  7 2011) on Tue May 22 17:02:30 2012
 #
 
 #
@@ -48,7 +48,7 @@ CXXFLAGS=-Wall -Wextra -Wundef -Wcast-qual -Wcast-align -Wconversion -Wreturn-ty
 ########## End of flags from header.mak
 
 
-CPP_FILES =	count_colorings.cpp graph.cpp main.cpp sample.cpp
+CPP_FILES =	count_colorings.cpp graph.cpp sample.cpp
 C_FILES =	
 PS_FILES =	
 S_FILES =	
@@ -61,13 +61,10 @@ OBJFILES =	graph.o
 # Main targets
 #
 
-all:	count_colorings main sample 
+all:	count_colorings sample 
 
 count_colorings:	count_colorings.o $(OBJFILES)
 	$(CXX) $(CXXFLAGS) -o count_colorings count_colorings.o $(OBJFILES) $(CCLIBFLAGS)
-
-main:	main.o $(OBJFILES)
-	$(CXX) $(CXXFLAGS) -o main main.o $(OBJFILES) $(CCLIBFLAGS)
 
 sample:	sample.o $(OBJFILES)
 	$(CXX) $(CXXFLAGS) -o sample sample.o $(OBJFILES) $(CCLIBFLAGS)
@@ -78,7 +75,6 @@ sample:	sample.o $(OBJFILES)
 
 count_colorings.o:	graph.h
 graph.o:	graph.h
-main.o:	
 sample.o:	graph.h
 
 #
@@ -91,7 +87,7 @@ archive.tgz:	$(SOURCEFILES) Makefile
 	tar cf - $(SOURCEFILES) Makefile | gzip > archive.tgz
 
 clean:
-	-/bin/rm $(OBJFILES) count_colorings.o main.o sample.o core 2> /dev/null
+	-/bin/rm $(OBJFILES) count_colorings.o sample.o core 2> /dev/null
 
 realclean:        clean
-	-/bin/rm -rf count_colorings main sample 
+	-/bin/rm -rf count_colorings sample 
