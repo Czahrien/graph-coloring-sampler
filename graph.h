@@ -1,6 +1,6 @@
 /**
  * File: graph.h
- * Author: Benjamin Mayes <bdm8233@rit.edu>
+ * Author: Benjamin Mayes <bdm8233@rit.edu> Tony Bentancur <amb8241@rit.edu>
  * Description: A simple undirected graph class.
  */
 
@@ -136,7 +136,31 @@ class graph {
          * @param v     A vector containing at least n colors.
          */
         void set_colors(std::vector<unsigned int> v);
-    private:
+		/**
+		 * Performs the Markov Chain step. That is it chooses a random vertex
+		 * and recolors that vertex a random valid color.
+		 *
+		 * @param q     The number of colors in the graph
+         * @param i     The subgraph we are considering. Default value of _n
+         *              means that this function behaves as if it was simply
+         *              checking the adjacency matrix normally.
+         *              Default value of -1 just means that the max integer
+         *              will be used which is desirable.
+		 */
+		void markov_step(unsigned int q, unsigned int i);
+		/**
+		 * Gets a randomly generated valid color for vertex v.
+		 *
+		 * @param v		The vertex to find a find color on.
+		 * @param q		The number of colors.
+         * @param i     The subgraph we are considering. Default value of _n
+         *              means that this function behaves as if it was simply
+         *              checking the adjacency matrix normally.
+         *              Default value of -1 just means that the max integer
+         *              will be used which is desirable.
+		 */
+		unsigned int get_rand_valid_color(unsigned int v, unsigned int q, unsigned int i = -1);
+	private:
         /**
          * The number of vertices in the graph.
          */
