@@ -180,9 +180,16 @@ long double graph::sample(unsigned int q, long double epsilon) {
     }
 #ifndef OMIT_OUTPUT
     std::cout << "Given graph has delta = " << delta << " colors." << std::endl;
-    if( q < 2*delta) std::cout << "Warning: q ( " << q << ") < 2*delta. Sample may be inaccurate." <<std::endl;
+    if( q < 2*delta) std::cout << "Warning: q (" << q << ") < 2*delta. Sample may be inaccurate." <<std::endl;
 #endif
-    unsigned int steps = static_cast<unsigned int>(static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon)));
+    unsigned int steps;
+    if( 2*delta >= q ) {
+        std::cout << "# of colors < 2*delta. Mixing and termination of sampler not guaranteed." << std::endl;
+        // some large number of steps just to "try" to mix the chain.
+        steps = q*_n*_n/epsilon;
+    } else {
+        steps = static_cast<unsigned int>(static_cast<long double>((q*_n)/(q-2*delta)*log(_n/epsilon)));
+    }
 #ifndef OMIT_OUTPUT
     std::cout << "Mixing Markov chain by running for " << steps << " steps" << std::endl; 
 #endif
