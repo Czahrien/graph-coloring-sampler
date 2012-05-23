@@ -7,9 +7,10 @@
 using namespace std;
 
 int main(int argc, char** argv) {
+    double epsilon = 0.1;
     istream * is = &cin;
     filebuf fb;
-    if( argc == 2 ) {
+    if( argc > 2 ) {
         fb.open( argv[1], ifstream::in );
         if( !fb.is_open() ) { 
             cerr << "Invalid filename: " << argv[1] << "\n";
@@ -17,6 +18,9 @@ int main(int argc, char** argv) {
         } else {
             is = new istream(&fb);
         }
+        if(argc == 3) 
+            sscanf(argv[2],"%lf",&epsilon);
+
     } 
 
     istream& in(*is);
@@ -34,7 +38,7 @@ int main(int argc, char** argv) {
     vector<long double> v;
     srand(time(NULL));
     for( int i = 0; i < 7; ++i ) {
-        long double approx = g.sample(ncolors,0.1);
+        long double approx = g.sample(ncolors,epsilon);
         v.push_back(approx);
         cout << "Run " << i << ":"<< approx << endl;
     }
