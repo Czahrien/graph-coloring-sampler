@@ -33,7 +33,7 @@ Which means that nearly all the calculations of the edge matching sampling chain
 Aside from that change, the reductions are both identical.
 
 \section{Other Students' Input}
-Since our sampler is rather optimized it handles graphs with less than 50 vertices quite effectively (each run on a k50 with 100 colors takes approximately one minute to complete). However, Due to the quartic nature of $O(\frac{n^4}{\epsilon^2})$ doubling this number to 100 however means that the running time is multiplied by a factor of 16 (and indeed, one of James' 50 vertex graphs completed a trial in approximately 16 minutes). Couple this with the fact of the counting being done 7 times to raise the probability of being within $\plusminus \frac{\epsilon}{2}$ of the actual answer to $0.9$ and you have something that runs for over an hour. Due to time constraints these graphs of $n \geq 100$ could not be completed. Note that \textbf{running times are not accurate to the total time} unless if each of the seven counting runs totals greater than 1 second to allow for the RNG to be seeded differently each time.
+Since our sampler is rather optimized it handles graphs with less than 50 vertices quite effectively (each run on a k50 with 100 colors takes approximately one minute to complete). However, Due to the quartic nature of $O(\frac{n^4}{\epsilon^2})$ doubling this number to 100 however means that the running time is multiplied by a factor of 16 (one of James' 100 vertex graphs completed a trial in approximately 16 minutes which agrees with this intuition). Couple this with the fact of the counting being done 7 times to raise the probability of being within $\plusminus \frac{\epsilon}{2}$ of the actual answer to $0.9$ and you have something that runs for over an hour. Due to time constraints these graphs of $n \geq 100$ could not be completed.
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -41,20 +41,20 @@ Input File & Approximate Number of Colorings & Running Time \\\hline
 \texttt{Bogue, Max - test1.txt} & 5.36113e+25 & 56.191s\\\hline
 \texttt{Bogue, Max - test2.txt} & 1.31716e+37 & 202.974s\\\hline
 \texttt{Bogue, Max - test3.txt} & 2.25976e+36 & 443.534s\\\hline
-\texttt{Lange, Alexander - high.txt} & 1.60548e+12 & 7.343s\\\hline
-\texttt{Lange, Alexander - mid.txt} & 1.90918e+12 & 6.99s\\\hline
-\texttt{Lange, Alexander - low.txt} & 1.69701e+11 & 6.985s\\\hline
-\texttt{Leibig, Brian - dense.graph} & 6.34569e+22 & 13.954s\\\hline
-\texttt{Leibig, Brian - normal.graph} & 6.87353e+19 & 13.504s\\\hline
-\texttt{Leibig, Brian - sparse.graph} & 7.64573e+16 & 7.554s\\\hline
+\texttt{Lange, Alexander - high.txt} & 1.60548e+12 & 6.871s\\\hline
+\texttt{Lange, Alexander - mid.txt} & 1.90918e+12 & 4.850s\\\hline
+\texttt{Lange, Alexander - low.txt} & 1.69701e+11 & 6.119s\\\hline
+\texttt{Leibig, Brian - dense.graph} & 6.34569e+22 & 12.954s\\\hline
+\texttt{Leibig, Brian - normal.graph} & 6.87353e+19 & 9.024s\\\hline
+\texttt{Leibig, Brian - sparse.graph} & 7.64573e+16 & 4.650s\\\hline
 \texttt{Loomis, James - graph-25-47-8} & 6.02073e+19 & 27.290s\\\hline
 \texttt{Loomis, James - graph-50-1000-45} & 8.87037e+69 & 578.826s\\\hline
-\texttt{Mayes, Benjamin - dense.in} & 2.4712e+11 & 6.909s \\\hline
-\texttt{Mayes, Benjamin - k5.in} & 95683 & 6.960s\\\hline
-\texttt{Mayes, Benjamin - sparse.in} & 130312 & 6.963s\\\hline
-\texttt{Okka- highQ highM.txt} & 2.15877e+06 & 6.957s\\\hline
-\texttt{Okka- mediumQ sparseM.txt} & 104420 & 6.966s\\\hline
-\texttt{Okka- lowQ mediumM.txt} & 2.05731e+07 & 6.958s\\\hline
+\texttt{Mayes, Benjamin - dense.in} & 2.4712e+11 & 1.510s \\\hline
+\texttt{Mayes, Benjamin - k5.in} & 95683 & 0.234s\\\hline
+\texttt{Mayes, Benjamin - sparse.in} & 130312 & 0.138s\\\hline
+\texttt{Okka- highQ highM.txt} & 2.15877e+06 & 1.230s\\\hline
+\texttt{Okka- mediumQ sparseM.txt} & 104420 & 0.566s\\\hline
+\texttt{Okka- lowQ mediumM.txt} & 2.05731e+07 & 2.005s\\\hline
 \texttt{Stalnaker, David - dense.txt}  &  4.66076e+71 & 502.099s\\\hline
 \texttt{Stalnaker, David - sparse.txt} & 1.37444e+50 & 181.967s \\\hline
 \texttt{Stalnaker, David - medium.txt} &  1.50574e+71 &419.767s\\\hline
