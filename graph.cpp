@@ -170,7 +170,6 @@ unsigned int graph::get_rand_valid_color(unsigned int v, unsigned int q, unsigne
 // average O(n^4/eps^2)
 long double graph::sample(unsigned int q, long double epsilon) {
 	generate_arbitrary_coloring();
-    srand(time(NULL));
     unsigned int delta = 0;
     for( unsigned int i = 0; i < _n; ++i ) {
         unsigned int ndelta = 0;
