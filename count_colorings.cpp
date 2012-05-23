@@ -36,7 +36,6 @@ int main(int argc, char** argv) {
     for( int i = 0; i < n; ++i ) {
         prod *= ncolors;
     }
-    cout << prod << endl;
     for( int i = 0; i < prod; ++i ) {
         int tmp = i;
         for( int j = 0; j < n; ++j ) {
