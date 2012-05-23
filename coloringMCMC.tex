@@ -33,11 +33,19 @@ Which means that nearly all the calculations of the edge matching sampling chain
 Aside from that change, the reductions are both identical.
 
 \section{Instructions}
-To build the two main programs, \texttt{count\_colorings} (the brute-force coloring counter) and \texttt{sampler} (the counting sampler) simply type \texttt{make} in the main directory. To build \texttt{gen\_graph}, the graph generator, go to the input directory and type \texttt{make}. These programs are run as followed:
+To build the two main programs, \texttt{count\_colorings} (the brute-force coloring counter) and \texttt{sampler} (the counting sampler) simply type \texttt{make} in the main directory. To build \texttt{gen\_graph}, the graph generator, go to the input directory and type \texttt{make}. These programs are executed as followed:
 \begin{itemize}
 \item \texttt{count\_colorings}: \texttt{./count\_colorings input} - Where input is the input file.
 \item \texttt{sampler}: \texttt{./sampler input [epsilon]} - Where input is the input file and epsilon is an optional parameter in the interval $(0,1]$ which defaults to $0.1$ if not given.
 \item \texttt{gen\_graph}: \texttt{./gen\_graph n q [p]} - Where n is the number of vertices, q is the number of colors, and p is an optional probability of including each edge in $K_n$.
+\end{itemize}
+A couple things of note: 
+\begin{itemize}
+\item All programs assume correct input file format.
+\item The brute force counting algorithm behaves strangely on graphs with a large number of vertices and/or a large number of colors. (It does not overflow check.)
+\item The sampler will not terminate if it cannot find a valid color to color a vertex. (There is a warning about this if this is the case.)
+\item The sampler should not be compiled with the \texttt{-O4} optimization flag. For some reason there is a problem with certain patterns of floating point arithmetic with that level of optimization that lead to unexplainable results.
+\item The sampler should be compiled with the \texttt{-DNDEBUG} flag. This removes assertions which sanity check the program and slow it down.
 \end{itemize}
 \section{Input}
 \subsection{Other Students}
