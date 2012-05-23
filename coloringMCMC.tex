@@ -1,4 +1,4 @@
-\documentclass[12]{article}
+\documentclass[14]{article}
 \usepackage[margin=.75in]{geometry}
  \usepackage{setspace}
 \usepackage{amsmath}
@@ -32,8 +32,9 @@ Which means that nearly all the calculations of the edge matching sampling chain
 
 Aside from that change, the reductions are both identical.
 
-\section{Other Students' Input}
-Since our sampler is rather optimized it handles graphs with less than 50 vertices quite effectively (each run on a k50 with 100 colors takes approximately one minute to complete). However, Due to the quartic nature of $O(\frac{n^4}{\epsilon^2})$ doubling this number to 100 however means that the running time is multiplied by a factor of 16 (one of James' 100 vertex graphs completed a trial in approximately 16 minutes which agrees with this intuition). Couple this with the fact of the counting being done 7 times to raise the probability of being within $\plusminus \frac{\epsilon}{2}$ of the actual answer to $0.9$ and you have something that runs for over an hour. Due to time constraints these graphs of $n \geq 100$ could not be completed.
+\section{Input}
+\subsection{Other Students}
+Since our sampler is rather optimized it handles graphs with less than 50 vertices quite effectively (each run on a k50 with 100 colors takes approximately one minute to complete). However, Due to the quartic nature of $O(\frac{n^4}{\epsilon^2})$ doubling this number to 100 however means that the running time is multiplied by a factor of 16 (one of James' 100 vertex graphs completed a trial in approximately 16 minutes which agrees with this intuition). Couple this with the fact of the counting being done 7 times to raise the probability of being within $\pm \frac{\epsilon}{2}$ of the actual answer to $0.9$ and you have something that runs for over an hour. Due to time constraints these graphs of $n \geq 100$ could not be completed.
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -60,4 +61,17 @@ Input File & Approximate Number of Colorings & Running Time \\\hline
 \texttt{Stalnaker, David - medium.txt} &  1.50574e+71 &419.767s\\\hline
 \end{tabular}
 \end{center}
+\subsection{Our Inputs}
+All of three of our inputs were generated using a graph generation program (see \texttt{gen\_graph} in the submission's input directory). This program Takes in a number of vertices, a number of colors, and an optional probability (it defaults to 1.0) of randomly including any given edge. This results in a graph that is dense if the given probability is close to 1, a sparse graph if the probability is close to 0, and a medium graph if the probability is somewhere in-between. After several trials I arrived at the following graphs:
+\begin{itemize}
+\item \texttt{sparse.in} - a 5 vertex graph with $p=0.4$.
+\item \texttt{k5.in} - a 5 vertex complete graph.
+\item \texttt{dense.in} - a 10 vertex graph with $p=0.6$.
+\end{itemize}
+Note that at the time of generation I was expecting these to be feasibly run by the brute force algorithm (although it may require longer than most people care to run it for the dense graph) so they are quite a bit smaller than they could be. The benefit of doing this however is that it is easy to verify that the approximated number of colorings are close to the correct number.
+\section{Experimentation}
+Varying epsilon can have dramatic results due to the inverse square law (we sample proportionally to the inverse of $\epsilon^2$. For instance, halving epsilon means a quadrupling in run-time and double epsilon means a fourthing of run-time. This means that very high epsilons can be used for very quick estimations and much smaller epsilons can be used when these estimations do not suffice. Despite the theoretical results stating that an epsilon of 0.9 is inaccurate, on a complete graph it tends to estimate very accurately (it is usually within $10-20\%$ of the actual value) but outliers tend to be extreme. Whether or not this holds for all graphs is hard to say, given more time we would determine more.
+\section{Conclusions}
+\subsection{Accuracy}
+The approximations done by this counting approach can be very accurate. When testing initially we used several complete graphs with double the number of colors of vertices. This means that the colorings were equal to $\frac{(2n)!}{n!}$ by a basic combinatorics argument. This sampler tends to produce an answer that is more accurate than the theoretical bounds, however we cannot use this to our advantage without modifying some of the weaker bounds taken in the sampling reduction and testing our sampler on a wide variety of graphs of sizes and structures whereas most of our testing has been done on complete graphs and the other students' input graphs.
 \end{document}
