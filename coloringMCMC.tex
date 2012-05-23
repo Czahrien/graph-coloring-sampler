@@ -53,9 +53,9 @@ Input File & Approximate Number of Colorings & Running Time \\\hline
 \texttt{Mayes, Benjamin - dense.in} & 2.4712e+11 & 1.510s \\\hline
 \texttt{Mayes, Benjamin - k5.in} & 95683 & 0.234s\\\hline
 \texttt{Mayes, Benjamin - sparse.in} & 130312 & 0.138s\\\hline
-\texttt{Okka- highQ highM.txt} & 2.15877e+06 & 1.230s\\\hline
-\texttt{Okka- mediumQ sparseM.txt} & 104420 & 0.566s\\\hline
-\texttt{Okka- lowQ mediumM.txt} & 2.05731e+07 & 2.005s\\\hline
+\texttt{Okka - highQ highM.txt} & 2.15877e+06 & 1.230s\\\hline
+\texttt{Okka - mediumQ sparseM.txt} & 104420 & 0.566s\\\hline
+\texttt{Okka - lowQ mediumM.txt} & 2.05731e+07 & 2.005s\\\hline
 \texttt{Stalnaker, David - dense.txt}  &  4.66076e+71 & 502.099s\\\hline
 \texttt{Stalnaker, David - sparse.txt} & 1.37444e+50 & 181.967s \\\hline
 \texttt{Stalnaker, David - medium.txt} &  1.50574e+71 &419.767s\\\hline
@@ -74,4 +74,6 @@ Varying epsilon can have dramatic results due to the inverse square law (we samp
 \section{Conclusions}
 \subsection{Accuracy}
 The approximations done by this counting approach can be very accurate. When testing initially we used several complete graphs with double the number of colors of vertices. This means that the colorings were equal to $\frac{(2n)!}{n!}$ by a basic combinatorics argument. This sampler tends to produce an answer that is more accurate than the theoretical bounds, however we cannot use this to our advantage without modifying some of the weaker bounds taken in the sampling reduction and testing our sampler on a wide variety of graphs of sizes and structures whereas most of our testing has been done on complete graphs and the other students' input graphs.
+\subsection{Ease of Writing}
+Despite the statistical mathematical reasoning behind this sort of of approach requiring a bit of thought, the actual implementation of the counting algorithm is very simple and very optimizable.
 \end{document}
